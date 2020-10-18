@@ -1,33 +1,28 @@
 const chatLog = (value) => {
-    let Nick = []
-    let User = []
     let logUser = []
     let logChat = []
+    let user = {}
     value.forEach((item) => {
         let data = item.split(" ")
-        if(item.startsWith("Enter")){
-            let x = User.indexOf(data[1])
-            if(x>=0){
-                Nick.splice(x, 1, data[2])
-            } else{
-                User.push(data[1])
-                Nick.push(data[2])
+        if(item.startsWith("Enter")){ 
+            if(user[data[1]]) {
+                user[data[1]] = data[2]
+            } else {
+                user[data[1]] = data[2]
             }
             logUser.push(`${data[1]} came in`)
         } else if(item.startsWith("Leave")){
             logUser.push(`${data[1]} hash left`)
         } else if(item.startsWith("Change")){
-            let nickIndex = User.indexOf(data[1])
-            Nick.splice(nickIndex, 1, data[2])
+            user[data[1]] = data[2]
         }
     });
-    logUser.forEach((item) => {
-        let data = item.split(" ")
-        let dataIndex = User.indexOf(data[0])
-        data.splice(0, 1, Nick[dataIndex])
+    logUser.forEach(beta => {
+        let data = beta.split(" ")
+        data[0] = user[data[0]]
         logChat.push(data.join(" "))
-    });
-    console.log(logChat);
+    })
+    console.log(logChat); //do it print line for check output
     return logChat
 }
 
